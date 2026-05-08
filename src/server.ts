@@ -18,6 +18,7 @@ import uploadRoutes from './routes/upload.routes';
 
 const app: Application = express();
 const DEFAULT_PORT = ENV.PORT;
+const localhostOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?$/i;
 
 // Connect to database
 connectDB();
@@ -27,7 +28,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ENV.FRONTEND_URL,
+    origin: (origin, callback) => {
+      const isAllowedOrigin =
+        !origin ||
+        ENV.FRONTEND_URLS.length === 0 ||
+        ENV.FRONTEND_URLS.includes(origin) ||
+        localhostOriginPattern.test(origin);
+
+      if (isAllowedOrigin) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
     credentials: true,
   })
 );

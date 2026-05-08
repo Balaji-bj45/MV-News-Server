@@ -3,6 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const parsedPort = Number.parseInt(process.env.PORT || '5000', 10);
+const frontendUrls = [process.env.FRONTEND_URL, process.env.FRONTEND_URLS]
+  .filter(Boolean)
+  .flatMap((value) => value!.split(','))
+  .map((url) => url.trim())
+  .filter(Boolean);
 
 export const ENV = {
   PORT: Number.isNaN(parsedPort) ? 5000 : parsedPort,
@@ -16,4 +21,5 @@ export const ENV = {
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
   NODE_ENV: process.env.NODE_ENV || 'development',
   FRONTEND_URL: process.env.FRONTEND_URL || '*',
+  FRONTEND_URLS: frontendUrls,
 };
