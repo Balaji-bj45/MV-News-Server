@@ -15,7 +15,7 @@ router.post(
   adminOnly,
   [
     body('title').notEmpty().withMessage('Title is required'),
-    body('category').isIn(['india', 'tamilnadu', 'candidate']).withMessage('Invalid category'),
+    body('category').isIn(['india', 'tamilnadu', 'candidate', 'mvnews']).withMessage('Invalid category'),
   ],
   createNews
 );
@@ -25,7 +25,7 @@ router.put(
   protect,
   adminOnly,
   [
-    body('category').optional().isIn(['india', 'tamilnadu', 'candidate']).withMessage('Invalid category'),
+    body('category').optional().isIn(['india', 'tamilnadu', 'candidate', 'mvnews']).withMessage('Invalid category'),
   ],
   updateNews
 );

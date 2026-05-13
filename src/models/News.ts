@@ -8,7 +8,7 @@ export interface INews extends Document {
   imageUrl?: string;
   source: string;
   sourceUrl?: string;
-  category: 'india' | 'tamilnadu' | 'candidate';
+  category: 'india' | 'tamilnadu' | 'candidate' | 'mvnews';
   tags: string[];
   isManual: boolean;
   isFeatured: boolean;
@@ -27,7 +27,7 @@ const newsSchema = new Schema<INews>(
     imageUrl: { type: String },
     source: { type: String, required: true, default: 'Admin' },
     sourceUrl: { type: String, unique: true, sparse: true },
-    category: { type: String, enum: ['india', 'tamilnadu', 'candidate'], required: true },
+    category: { type: String, enum: ['india', 'tamilnadu', 'candidate', 'mvnews'], required: true },
     tags: [{ type: String }],
     isManual: { type: Boolean, default: true },
     isFeatured: { type: Boolean, default: false },

@@ -87,20 +87,25 @@ export const createNews = async (req: Request, res: Response, next: NextFunction
        slug = `${slug}-${Math.random().toString(36).substring(2, 8)}`;
     }
 
-    const news = await News.create({
+    const newsDataPayload: any = {
       title,
       slug,
       description,
       content,
       imageUrl,
       source: source || 'Admin',
-      sourceUrl,
       category,
       tags,
       isManual: true,
       isFeatured: isFeatured || false,
       publishedAt: publishedAt || Date.now(),
-    });
+    };
+
+    if (sourceUrl && sourceUrl.trim() !== '') {
+      newsDataPayload.sourceUrl = sourceUrl.trim();
+    }
+
+    const news = await News.create(newsDataPayload);
 
     res.status(201).json({
       success: true,
@@ -121,13 +126,22 @@ export const updateNews = async (req: Request, res: Response, next: NextFunction
     }
 
     const { id } = req.params;
-    let updateData = { ...req.body };
+    let updateData: any = { ...req.body };
 
     if (updateData.title) {
       updateData.slug = generateSlug(updateData.title);
       const existing = await News.findOne({ slug: updateData.slug, _id: { $ne: id } });
       if (existing) {
         updateData.slug = `${updateData.slug}-${Math.random().toString(36).substring(2, 8)}`;
+      }
+    }
+
+    if (updateData.sourceUrl !== undefined) {
+      if (updateData.sourceUrl.trim() === '') {
+        delete updateData.sourceUrl;
+        updateData.$unset = { sourceUrl: 1 };
+      } else {
+        updateData.sourceUrl = updateData.sourceUrl.trim();
       }
     }
 
