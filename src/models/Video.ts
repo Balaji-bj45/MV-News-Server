@@ -8,6 +8,7 @@ export interface IVideo extends Document {
   publishedAt: Date;
   tags: string[];
   isFeatureInterview: boolean;
+  sourceType: 'manual' | 'channel';
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +22,7 @@ const videoSchema = new Schema<IVideo>(
     publishedAt: { type: Date, default: Date.now },
     tags: [{ type: String }],
     isFeatureInterview: { type: Boolean, default: false },
+    sourceType: { type: String, enum: ['manual', 'channel'], default: 'manual' },
   },
   { timestamps: true }
 );

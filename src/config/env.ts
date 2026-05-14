@@ -22,4 +22,7 @@ export const ENV = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   FRONTEND_URL: process.env.FRONTEND_URL || '*',
   FRONTEND_URLS: frontendUrls,
+  YOUTUBE_CHANNEL_URL: process.env.YOUTUBE_CHANNEL_URL || 'https://www.youtube.com/@MVNewsBot',
+  YOUTUBE_CHANNEL_ID: process.env.YOUTUBE_CHANNEL_ID || '',
+  YOUTUBE_CHANNEL_FEED_LIMIT: Number.parseInt(process.env.YOUTUBE_CHANNEL_FEED_LIMIT || '12', 10) || 12,
 };

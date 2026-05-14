@@ -14,7 +14,7 @@ router.post(
   protect,
   adminOnly,
   [
-    body('youtubeId').notEmpty().withMessage('YouTube ID is required'),
+    body('youtubeId').notEmpty().withMessage('YouTube video URL or ID is required'),
     body('title').notEmpty().withMessage('Title is required'),
   ],
   createVideo
