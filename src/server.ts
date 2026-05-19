@@ -15,6 +15,7 @@ import newsRoutes from './routes/news.routes';
 import candidateRoutes from './routes/candidate.routes';
 import videoRoutes from './routes/video.routes';
 import uploadRoutes from './routes/upload.routes';
+import advertisementRoutes from './routes/advertisement.routes';
 
 const app: Application = express();
 const DEFAULT_PORT = ENV.PORT;
@@ -58,6 +59,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/candidates', candidateRoutes);
 app.use('/api/videos', videoRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/ads', advertisementRoutes);
 
 // Base route
 app.get('/', (req: Request, res: Response) => {

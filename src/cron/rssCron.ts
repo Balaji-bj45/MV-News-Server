@@ -8,5 +8,11 @@ export const initCronJobs = () => {
     await fetchAndSaveRSS();
   });
   
+  // For deployments like Render that sleep, fetch immediately on startup
+  setTimeout(() => {
+    console.log('Running initial RSS fetch job on startup...');
+    fetchAndSaveRSS().catch(console.error);
+  }, 5000);
+
   console.log('Cron jobs initialized');
 };

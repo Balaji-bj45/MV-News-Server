@@ -37,4 +37,8 @@ const newsSchema = new Schema<INews>(
   { timestamps: true }
 );
 
+newsSchema.index({ publishedAt: -1 });
+newsSchema.index({ category: 1, publishedAt: -1 });
+newsSchema.index({ isFeatured: 1, publishedAt: -1 });
+
 export default mongoose.model<INews>('News', newsSchema);
