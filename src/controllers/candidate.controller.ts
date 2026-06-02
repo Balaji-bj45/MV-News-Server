@@ -46,6 +46,10 @@ export const createCandidate = async (req: Request, res: Response, next: NextFun
 
     const candidate = await Candidate.create(req.body);
 
+    if (candidate.isMainCandidate) {
+      await Candidate.updateMany({ _id: { $ne: candidate._id } }, { $set: { isMainCandidate: false } });
+    }
+
     res.status(201).json({
       success: true,
       message: 'Candidate created successfully',
@@ -70,6 +74,10 @@ export const updateCandidate = async (req: Request, res: Response, next: NextFun
     if (!candidate) {
       res.status(404).json({ success: false, message: 'Candidate not found' });
       return;
+    }
+
+    if (candidate.isMainCandidate) {
+      await Candidate.updateMany({ _id: { $ne: candidate._id } }, { $set: { isMainCandidate: false } });
     }
 
     res.status(200).json({

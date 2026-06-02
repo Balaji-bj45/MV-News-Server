@@ -18,6 +18,7 @@ export interface ICandidate extends Document {
     whatsapp?: string;
   };
   isActive: boolean;
+  isMainCandidate: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -51,6 +52,7 @@ const candidateSchema = new Schema<ICandidate>(
       whatsapp: { type: String },
     },
     isActive: { type: Boolean, default: true },
+    isMainCandidate: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
